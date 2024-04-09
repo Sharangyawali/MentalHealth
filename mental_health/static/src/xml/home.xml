@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="home_page" name="Home">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+            <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+            <div
+                id="carouselExampleIndicators2" class="carousel slide carousel-container"
+                data-bs-ride="carousel">
+
+                <div class="carousel-inner innnnerrr">
+                    <div class="carousel-indicators d-side">
+                        <button type="button" data-bs-target="#carouselExampleIndicators2"
+                            data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators2"
+                            data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators2"
+                            data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+
+                    </div>
+                    <div class="carousel-item active home-profile-card ">
+                        <div class="car card-1">
+                            <div class="call-content tracking-in-expand">Think For You and Your Family</div>
+                            <a class="call-btn btn btn-sm" href="/find-doctor">Book
+                                Now</a>
+                            <div class="shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item home-profile-card">
+                        <div class="car card-2">
+                            <div class="call-content tracking-in-expand">Find a Right Specialist For You</div>
+                            <a class="call-btn btn btn-sm" href="/find-doctor">Book
+                                Now</a>
+                            <div class="shadow"></div>
+                        </div>
+                    </div>
+                    <div class="carousel-item home-profile-card ">
+                        <div class="car card-3">
+                            <div class="call-content">Don't Think Much, Make An Appointment Now</div>
+                            <a class="call-btn btn btn-sm" href="/find-doctor">Book
+                                Now</a>
+                            <div class="shadow"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="main-container">
+                <div class="home-pu-count">
+                    <div class="home-data testimonial-three">
+
+                        <div class="has-right-border testimonial-three-col">
+                            <h1>AUSTRALIA</h1>
+                            <p> LOCATION</p>
+                        </div>
+                        <div class="testimonial-three-col">
+                            <h1>10+</h1>
+                            <p>CONSULTANTS</p>
+                        </div>
+                        <div class="testimonial-three-col">
+                            <h1>10:30 - 17:30</h1>
+                            <p> SERVICE TIME</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="home-vision">
+                    <div class="home-vision-container">
+                        <div class="vision">
+                            <div class="vision-image">
+                                <img src="/mental_health/static/src/images/find_right_doctor.png"
+                                    alt="about" />
+                            </div>
+                            <div class="vision-text">
+
+                                <p class="vision-title">Who we are?</p>
+                                <p class="vision-description">
+                                    PsychCare Services Telehealth is an online Youth Mental Health
+                                    Service that specialises in
+                                    proving expert clinical assessments and treatment
+                                    recommendations for a range of mental health
+                                    disorders. PsychCare Services has been proving Telehealth
+                                    services across Australia for the last
+                                    10 years and works with a number of Headspace sites and GP
+                                    practices. With years of experience,
+                                    our Psychiatrists will create an individualised recovery plan
+                                    that is right for you. We firmly
+                                    believe in providing high quality and accessible mental health
+                                    care regardless of where you
+                                    live.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials my-3">
+                    <div class="testimonials mt-3">
+                        <section class="section-medium">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h2 class="section-title ">OUR SERVICES</h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="section-primary t-bordered">
+                            <div class="container">
+                                <div class="row testimonial-three ">
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-arrows-to-eye"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Assessments &amp; Management
+                                                    Plans</h5>
+                                                <p>
+                                                    We offer comprehensive assessment and treatment
+                                                    plans for a range of
+                                                    developmental
+                                                    and mental health disorders. Your GP remains
+                                                    your main doctor responsible for
+                                                    your
+                                                    ongoing care and scripts.
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-brain"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Developmental Disorders</h5>
+                                                <p>
+                                                    We offer clinical assessments and treatment
+                                                    plans for Autism Spectrum Disorders
+                                                    (ASD) and Attention Deficit Hyperactivity
+                                                    Disorder (ADHD).
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-heart-crack"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Anxiety Disorders</h5>
+                                                <p>
+                                                    We specialise in the diagnosis and management of
+                                                    a range of Anxiety Disorders in
+                                                    young people aged 12 to 25.
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-face-smile"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Depressive Disorders</h5>
+                                                <p>
+                                                    We specialise in the diagnosis and management of
+                                                    emerging and treatment
+                                                    resistant
+                                                    Depression in young people aged 12 to 25.
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-clipboard-list"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Complex Developmental Trauma</h5>
+                                                <p>
+                                                    We offer comprehensive assessment and treatment
+                                                    plans for you people who have
+                                                    experienced a range of trauma.
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 testimonial-three-col">
+                                        <div class="testimonial-inner">
+                                            <div class="testimonial-image" itemprop="image">
+                                                <i class="fa-solid fa-disease"></i>
+                                            </div>
+
+                                            <div class="testimonial-content vision-description">
+                                                <h5 class="semi-title">Post Traumatic Stress
+                                                    Disorder</h5>
+                                                <p>
+                                                    We offer comprehensive assessment and treatment
+                                                    plans for young people who have
+                                                    PTSD
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
+            </div>
+            <script>
+                const swiper = new Swiper('.swiper', {
+                direction: 'vertical',
+                spaceBetween:30,
+
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+
+                });
+            </script>
+
+        </t>
+    </template>
+</odoo>

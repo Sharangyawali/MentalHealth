@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="timezone_default_1" model="timezone.model">
+            <field name="tz">UTC</field>
+        </record>
+        <record id="timezone_default_2" model="timezone.model">
+            <field name="tz">KTM</field>
+        </record>
+        <record id="timezone_default_3" model="timezone.model">
+            <field name="tz">AUS</field>
+        </record>
+        <record id="timezone_default_4" model="timezone.model">
+            <field name="tz">BANGKOK</field>
+        </record>
+        <record id="timezone_default_5" model="timezone.model">
+            <field name="tz">USA</field>
+        </record>
+        <record id="timezone_default_6" model="timezone.model">
+            <field name="tz">CAN</field>
+        </record>
+    </data>
+</odoo>

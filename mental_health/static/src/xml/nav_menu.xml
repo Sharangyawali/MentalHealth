@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="home_website_menu" model="website.menu">
+        <field name="name">HOME</field>
+        <field name="url">/</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">20</field>
+        <field name="new_window">False</field>
+    </record>
+    <record id="services_website_menu" model="website.menu">
+        <field name="name">SERVICES</field>
+        <field name="url">/services</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">21</field>
+        <field name="new_window">False</field>
+    </record>
+    <record id="practice_website_menu" model="website.menu">
+        <field name="name">PRACTICE INFO</field>
+        <field name="url">/practice_info</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">22</field>
+        <field name="new_window">False</field>
+    </record>
+    <record id="about_us_website_menu" model="website.menu">
+        <field name="name">ABOUT US</field>
+        <field name="url">/about_us</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">23</field>
+        <field name="new_window">False</field>
+    </record>
+    <record id="contact_us_website_menu" model="website.menu">
+        <field name="name">CONTACT US</field>
+        <field name="url">/contact_us</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">23</field>
+        <field name="new_window">False</field>
+    </record>
+    <!-- <record id="book_appointment_website_menu" model="website.menu">
+        <field name="name">BOOK APPOINTMENT</field>
+        <field name="url">/book_appointment</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">200</field>
+        <field name="new_window">False</field>
+    </record> -->
+</odoo>

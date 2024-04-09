@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+<!--    <record id="view_res_users_form_inherited" model="ir.ui.view">-->
+<!--        <field name="name">custom.res.users.form.inherited</field>-->
+<!--        <field name="model">res.users</field>-->
+<!--        <field name="inherit_id" ref="base.view_users_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--             <xpath expr="//field[@name='company_ids']" position="attributes">-->
+<!--                <attribute name="options">{'no_create': False}</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='company_id']" position="attributes">-->
+<!--                <attribute name="context">{}</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="view_partner_property_form" model="ir.ui.view">
+        <field name="name">res.partner.company.id.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="company_id"/>
+            </field>
+        </field>
+    </record>
+    <template id="signup_page" inherit_id="auth_signup.signup" name="Signup">
+        <xpath expr="//form[@class='oe_signup_form']" position="replace">
+            <!-- <script src="https://smtpjs.com/v3/smtp.js" /> -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+            </script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+            </script>
+
+            <div class="container-with-bg">
+                <div class="form-container px-5 py-3 border-7">
+                    <h1 class="form-header">Signup</h1>
+                    <label for="userType" class="form-label required">Select User Type</label>
+
+                    <form class="form-content" role="form" method="post"
+                        t-if="not message">
+                        <select class="form-select mb-3" name="type" id="userType">
+
+                        <option selected="selected" disabled="disabled">
+                            ...
+                        </option>
+                        <option value="individual">
+                            Individual
+                        </option>
+                        <option value="organization">
+                            Organization
+                        </option>
+
+                    </select>
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                        <p class="alert alert-danger" t-if="error" role="alert">
+                            <t t-esc="error" />
+                        </p>
+                        <input type="hidden" name="redirect" t-att-value="redirect" />
+                        <input type="hidden" name="token" t-att-value="token" />
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                        <div class="row g-3 mb-5" id="registration-form">
+                        </div>
+
+                        <div class="col-12">
+                            <p class="alert alert-danger" t-if="error" role="alert">
+                                <t t-esc="error" />
+                            </p>
+                            <input type="hidden" name="redirect" t-att-value="redirect" />
+                            <input type="hidden" name="token" t-att-value="token" />
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-action mb-1" id="submit"
+                                    style="max-width:150px;background:var(--theme-bg);color:#fff;">
+                                    Sign up</button>
+                                <br />
+                                <a t-attf-href="/web/login?{{ keep_query() }}"
+                                    class="btn mt-2" style="max-width:150px;" role="button">Login?</a>
+                                <div class="o_login_auth" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript" src="/mental_health/static/src/js/signup.js" />
+        </xpath>
+    </template>
+</odoo>

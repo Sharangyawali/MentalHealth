@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="appointment_sequence" model="ir.sequence">
+        <field name="name">Appointment Sequence</field>
+        <field name="code">mental.health.appointment.sequence</field>
+        <field name="prefix">APT_20</field>
+        <field name="padding">6</field>
+        <field name="number_increment" eval="1"/>
+    </record>
+
+    <record id="employee_sequence" model="ir.sequence">
+        <field name="name">Employee Sequence</field>
+        <field name="code">mental.health.employee.sequence</field>
+        <field name="prefix">EMP_0</field>
+        <field name="padding">6</field>
+        <field name="number_increment" eval="1"/>
+    </record>
+</odoo>

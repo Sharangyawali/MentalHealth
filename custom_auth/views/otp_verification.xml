@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="otp_verification" name="OTP Verification">
+        <t t-call="web.login_layout">
+            <style>
+                body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                }
+
+                .center-container {
+                display: flex;
+                flex-direction:column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                }
+
+                .otp-container {
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+                }
+
+                label {
+                font-size: 18px;
+                display: block;
+                margin-bottom: 10px;
+                }
+
+                input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                }
+
+                button {
+                background-color: #4caf50;
+                color: #fff;
+                padding: 12px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                }
+
+                button:hover {
+                background-color: #45a049;
+                }
+            </style>
+            <form class="oe_otp_verification_form" role="form" method="post" t-if="not message">
+                <div class="center-container">
+                    <div class="otp-container field-otp">
+                        <h2>OTP Verification</h2>
+                        <label for="otp">Enter OTP:</label>
+                        <input type="text" name="otp" required="true" class="form-control form-control-sm" autofocus="autofocus"
+                               autocapitalize="off"/>
+                        <p class="alert alert-danger" t-if="error" role="alert">
+                            <t t-esc="error"/>
+                        </p>
+                        <button type="submit" class="btn btn-primary"> Verify OTP</button>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+
+
+
+    <template id="change_password" name="Change Password">
+        <t t-call="web.login_layout">
+            <style>
+                body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                }
+
+                .change-container {
+                top:50%;
+                left:50%;
+                position:absolute;
+                transform:translate(-50%,-50%);
+                max-width: 400px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+
+                h2 {
+                font-size:x-large;
+                text-align: center;
+                color: #333;
+                }
+
+                form {
+                display: flex;
+                flex-direction: column;
+                }
+
+                label {
+                margin-bottom: 8px;
+                color: #555;
+                }
+
+                input {
+                padding: 10px;
+                margin-bottom: 16px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                }
+
+                button {
+                background-color: #269bad;
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                }
+
+                button:hover {
+                background-color: #1c8291;
+                }
+
+                .message {
+                text-align: center;
+                color: #555;
+                }
+            </style>
+            <div style="height:100vh;">
+            <div class="change-container">
+                <h2>Password Change</h2>
+                <form role="form" method="post" t-if="not message">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="password" required="1" autocapitalize="off"/>
+
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirm_password" required="1" autocapitalize="off"/>
+                    <p class="alert alert-danger" t-if="error" role="alert">
+                        <t t-esc="error"/>
+                    </p>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+            </div>
+
+        </t>
+    </template>
+</odoo>

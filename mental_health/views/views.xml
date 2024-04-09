@@ -1,0 +1,804 @@
+<odoo>
+  <data>
+    <!-- server action to the one above -->
+    <!-- <record model="ir.actions.server" id="mental_health.action_server">
+      <field name="name">mental_health server</field>
+      <field name="model_id" ref="model_patient_personal_info"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "name":"Mental Health",
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record> -->
+
+    <!-- Top menu item -->
+    <menuitem name="Mental Care" id="mental_health.menu_root" />
+
+    <!-- menu categories -->
+
+    <menuitem name="Doctor" id="mental_health.doctor_menu" parent="mental_health.menu_root"
+    />
+
+    <!-- this below is for the doctor model view -->
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="mental_health.doctor_list">
+      <field name="name">doctor.list</field>
+      <field name="model">doctor.list.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_full_name" />
+          <field name="specialty" />
+          <field name="qualifications" />
+          <field name="contact_phone" />
+          <field name="contact_email" />
+          <field name="office_address" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- this is form view -->
+    <record model="ir.ui.view" id="mental_health.doctor_form_view">
+      <field name="name">doctor.form.view</field>
+      <field name="model">doctor.list.model</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button string="Generate Schedule" type="object" name="generate_schedule"
+              class="bg-secondary" />
+            <button string="Send an Mail" type="object" name="send_approve_mail"
+              class="bg-primary text-white" />
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box" />
+            <field name="profile_picture" widget="image" class="oe_avatar"
+              options="{&quot;preview_image&quot;: &quot;profile_picture&quot;}" on_change="1" />
+            <!-- <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+            modifiers="{&quot;invisible&quot;: [[&quot;active&quot;, &quot;=&quot;, true]]}"/> -->
+            <div class="oe_title">
+              <h1 class="d-flex flex-row">
+                <!-- <span class="me-2">
+                          <widget name="hr_employee_chat"/>
+                      </span> -->
+                <field name="doctor_full_name" placeholder="Doctor's Name"
+                />
+              </h1>
+              <h2>
+                <field name="specialty" placeholder="Speciality" />
+              </h2>
+              <field name="qualifications" placeholder="Tags" />
+            </div>
+            <group>
+              <group>
+                <field name="gender"/>
+                <field name="contact_phone" widget="phone" />
+                <field name="contact_email" widget="phone" />
+                <field name="office_address" widget="email" />
+                <field name="availability" on_change="1"
+                  modifiers="{&quot;invisible&quot;: true, &quot;readonly&quot;: true}" />
+                <field name="appointment_duration"
+                  modifiers="{&quot;invisible&quot;: true, &quot;readonly&quot;: true}" />
+              </group>
+              <group>
+                <field name="accepting_new_patients" on_change="1" can_create="true"
+                  can_write="true" />
+                <field name="insurance_accepted" on_change="1" can_create="true" can_write="true" />
+                <field name="languages_spoken" on_change="1" can_create="true" can_write="true" />
+                <field name="professional_memberships" can_create="true" can_write="true" />
+                <field name="work_experience" />
+              </group>
+            </group>
+            <notebook>
+              <page name="public" string="Professional Information">
+                <div class="d-lg-flex"> <!-- These two div are used to position org_chart -->
+                  <div class="flex-grow-1">
+                    <group string="Location">
+                      <field name="hospital_affiliations" context="{'show_address': 1}"
+                        options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"
+                        on_change="1" can_create="true" can_write="true" />
+                      <field name="experience_years"
+                        can_create="true" can_write="true" />
+                    </group>
+                    <group name="managers" string="Approvers" class="hide-group-if-empty"
+                      modifiers="{&quot;invisible&quot;: true}">
+                      <!-- is overridden in other hr related modules -->
+                    </group>
+
+
+                  </div>
+                  <div class="col-lg-4 px-0 ps-lg-5 pe-lg-0">
+                    <separator string="Organization Chart" />
+                    <field name="emergency_contact" class="position-relative" />
+                  </div>
+                </div>
+              </page>
+              <page string="Other Information">
+                <group>
+                  <group string="ABCD INFO">
+                    <field name="emergency_contact"
+                      options="{'no_edit': True, 'no_create': True, 'no_open': True}"
+                      can_create="true" can_write="true" />
+                    <field name="telemedicine_available" />
+                    <field name="additional_notes" placeholder="Notes..." />
+                  </group>
+                  <group string="ABCD INFO">
+                    <field name="license_number"
+                      options="{'no_edit': True, 'no_create': True, 'no_open': True}"
+                      can_create="true" can_write="true" />
+                    <field name="license_expiration_date" />
+                    <field name="reviews_and_ratings" />
+                  </group>
+
+                </group>
+              </page>
+            </notebook>
+
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" options="{'post_refresh': 'recipients'}" />
+            <field name="message_ids" />
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="mental_health.doctor_action_window">
+      <field name="name">Doctor Details</field>
+      <field name="res_model">doctor.list.model</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Profile" id="mental_health.doctor_profile_submenu"
+      parent="mental_health.doctor_menu"
+      action="mental_health.doctor_action_window"
+      sequence="2"
+    />
+
+    <menuitem name="Reporting" id="mental_health.reporting_menu" parent="mental_health.menu_root"
+      action="mental_health.doctor_action_window"
+      sequence="99"
+    />
+
+    <menuitem name="Configuration" id="mental_health.configuration_menu"
+      parent="mental_health.menu_root"
+      sequence="100"
+    />
+    <!-- this below is for the hospital location model view -->
+    <menuitem name="Hospital List" id="mental_health.configuration_sub_menu"
+      parent="mental_health.configuration_menu"
+    />
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="mental_health.hospital_list">
+      <field name="name">hospital.list</field>
+      <field name="model">hospital.location</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="hospital_name" />
+          <field name="hospital_location" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="mental_health.hospital_action_window">
+      <field name="name">Hospital Details</field>
+      <field name="res_model">hospital.location</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="Hospitals" id="mental_health.configuration_sub_menu"
+      parent="mental_health.configuration_menu"
+      action="mental_health.hospital_action_window"
+    /> -->
+
+    <!-- Consultation Medium -->
+    <record model="ir.actions.act_window" id="mental_health.consultation_medium">
+      <field name="name">Consultation Medium</field>
+      <field name="res_model">consultation.medium</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Consultation Medium"
+      id="mental_health.configuration_sub_menu_consultation_medium"
+      parent="mental_health.configuration_menu"
+      action="mental_health.consultation_medium"
+    />
+    <!-- Organization Type -->
+    <record model="ir.actions.act_window" id="mental_health.organization_type">
+      <field name="name">Organization Type</field>
+      <field name="res_model">organization.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Organization Type" id="mental_health.configuration_sub_menu_organization_type"
+      parent="mental_health.configuration_menu"
+      action="mental_health.organization_type"
+    />
+    <!-- Organization Profile -->
+    <record model="ir.actions.act_window" id="mental_health.organization_account">
+      <field name="name">Account</field>
+      <field name="res_model">organization.account</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="organization_account_view_tree" model="ir.ui.view">
+      <field name="name">organization.account.view.tree</field>
+      <field name="model">organization.account</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="organization_name" />
+          <field name="email" />
+          <field name="organization_type" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="res_users_view_form" model="ir.ui.view">
+      <field name="name">res.users.view.form</field>
+      <field name="model">res.users</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <field name="organization_type" />
+              <field string="Allowed Companies" name="company_ids" widget="many2many_tags" options="{'no_create': True}" can_create="true" can_write="true"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="organization_account_view_form" model="ir.ui.view">
+      <field name="name">organization.account.view.form</field>
+      <field name="model">organization.account</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <div class="oe_button_box" name="button_box" />
+            <field name="logo" widget="image" class="oe_avatar"
+            />
+
+            <div class="oe_title">
+              <h1 class="d-flex flex-row">
+                <field name="organization_name" placeholder="Organization's Name"
+                />
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="email" />
+                <field name="phone" />
+              </group>
+              <group>
+                <field name="organization_type" />
+                <field name="industry" />
+                <field name="employee_size" />
+              </group>
+              <group>
+                <field name="city" />
+                <field name="street" />
+                <field name="zip" />
+<!--                <field name="associate_company" invisible="1"/>-->
+              </group>
+            </group>
+
+            <notebook>
+              <page name="users" string="Users">
+                <field name="org_users_page">
+                  <tree editable="top">
+                      <field name="name" string="Full Name"/>
+                      <field name="login" string="Email" />
+                      <field string="Allowed Companies" name="company_ids" widget="many2many_tags" options="{'no_create': True}" can_create="true" can_write="true"/>
+                      <field string="Default Company" name="company_id"  on_change="1" modifiers="{&quot;required&quot;: true}" can_create="true" can_write="true"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <menuitem name="My Account" id="mental_health.configuration_sub_menu_myaccount"
+      parent="mental_health.configuration_menu"
+      action="mental_health.organization_account"
+      sequence="1"
+    />
+
+    <!-- this view is for the appointment model -->
+    <record model="ir.ui.view" id="mental_health.book_appointment_list">
+      <field name="name">book.appointment.list</field>
+      <field name="model">book.appointment</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="ref" />
+          <field name="appointment_type" />
+          <field name="consult_type" />
+          <field name="hospital_location_id" />
+          <field name="patient_ref" />
+          <field name="doctor_model_id" />
+          <field name="timezone" />
+          <field name="requested_appointment_date" />
+          <field name="appointment_slot_start_time" />
+          <field name="appointment_slot_end_time" />
+          <field name="state" decoration-danger="state == 'reject'"
+            decoration-success="state == 'approved'" decoration-info="state == 'draft'"
+            widget="badge" optional="show" on_change="1" modifiers="{&quot;readonly&quot;: true}" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="mental_health.book_appointment_form_view">
+      <field name="name">book.appointment.form.view</field>
+      <field name="model">book.appointment</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button class="btn btn-primary" name="approve_request" type="object" string="Approve" />
+            <button name="reject_request" type="object" string="Decline" />
+            <field name="state" widget="statusbar" />
+          </header>
+          <sheet>
+            <h1>
+              <field name="ref" />
+            </h1>
+            <group>
+              <group>
+                <field name="appointment_type" />
+                <field name="consult_type" />
+                <field name="consultation_medium" />
+                <field name="hospital_location_id" can_create="false" can_write="false" />
+                <field name="doctor_model_id" can_create="false" can_write="false" />
+              </group>
+              <group>
+                <field name="patient_ref" options="{'no_create_edit': True}" />
+                <field name="timezone" />
+                <field name="requested_appointment_date" />
+                <field name="appointment_slot_start_time" />
+                <field name="appointment_slot_end_time"/>
+                <field name="gp_referall_doc" widget="image" style="max-width:150px;" />
+              </group>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" options="{'post_refresh': 'recipients'}" />
+            <field name="message_ids" />
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="mental_health.book_appointment_action_window">
+      <field name="name">Appointment Details</field>
+      <field name="res_model">book.appointment</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Appointments" id="mental_health.appointment_menu"
+      parent="mental_health.menu_root"
+      sequence="2"
+      action="mental_health.book_appointment_action_window"
+    />
+
+    <!-- this below is for the patient personal info model -->
+    <record model="ir.ui.view" id="mental_health.patient_info_list">
+      <field name="name">patient.personal.info.list</field>
+      <field name="model">patient.personal.info</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="patient_name" />
+          <field name="date_of_birth" />
+          <field name="email" />
+          <field name="mobile" />
+          <field name="address" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="mental_health.patient_info_form_view">
+      <field name="name">patient.personal.info.form.view</field>
+      <field name="model">patient.personal.info</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_button_box" name="button_box" />
+            <field name="profile_picture" widget="image" class="oe_avatar"
+              options="{&quot;preview_image&quot;: &quot;profile_picture&quot;}" on_change="1" />
+            <!-- <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+        modifiers="{&quot;invisible&quot;: [[&quot;active&quot;, &quot;=&quot;, true]]}"/> -->
+            <div class="oe_title">
+              <h1 class="d-flex flex-row p-2">
+                <!-- <span class="me-2">
+                      <widget name="hr_employee_chat"/>
+                  </span> -->
+                <field name="patient_name" placeholder="Patient's Name"
+                />
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="date_of_birth" />
+                <field name="mobile" widget="phone" />
+                <field name="email" widget="email" />
+                <field name="address" />
+              </group>
+              <group>
+
+                <field name="street" />
+                <field name="suburb" />
+                <field name="post_code" />
+              </group>
+
+
+            </group>
+            <notebook>
+              <page name="public" string="Medicare Info">
+                <div class="d-lg-flex"> <!-- These two div are used to position org_chart -->
+                  <div class="flex-grow-1">
+                    <group>
+                      <field name="medicare_card_no" />
+                      <field name="medicare_card_expiry"
+                        can_create="true" can_write="true" />
+                    </group>
+                  </div>
+                </div>
+              </page>
+              <page string="Credit Card Info">
+                <group>
+                  <group>
+                    <field name="credit_debit_card_no" />
+                    <field name="credit_debit_expiry" />
+                  </group>
+                  <group>
+                    <field name="card_holder_name" />
+                    <field name="card_security_code" />
+                  </group>
+                </group>
+              </page>
+              <page string="Comments">
+                <field name="comments" placeholder="Notes...." />
+              </page>
+            </notebook>
+
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" options="{'post_refresh': 'recipients'}" />
+            <field name="message_ids" />
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="mental_health.patient_info_action_window">
+      <field name="name">Patient Details</field>
+      <field name="res_model">patient.personal.info</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Patients" id="mental_health.patients_menu" parent="mental_health.menu_root"
+      action="mental_health.patient_info_action_window"
+    />
+
+    <!-- this below is for the views of doctor unavailable dates -->
+    <record model="ir.ui.view" id="mental_health.doctor_unavailable_dates_view">
+      <field name="name">doctor.unavailable.info.list</field>
+      <field name="model">doctor.dates</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id" />
+          <field name="unavailable_dates" widget="many2many_tags" />
+
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="mental_health.doctor_unavailable_dates_form_view">
+      <field name="name">doctor.unavailable.info.form.view</field>
+      <field name="model">doctor.dates</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="Doctor">
+
+              <field name="doctor_id" />
+            </group>
+            <notebook>
+              <page string="Unavailable Dates">
+                <field name="unavailable_dates">
+                  <tree>
+                    <field name="is_half_day" invisible="1" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="duration" />
+                  </tree>
+                  <form>
+                    <sheet>
+                      <group>
+
+                        <field name="start_date" attrs="{'invisible':[('is_half_day','=',True)]}" />
+                        <field name="end_date" attrs="{'invisible':[('is_half_day','=',True)]}" />
+                        <field name="unavailable_date"
+                          attrs="{'invisible':[('is_half_day','=',False)]}" />
+                        <field name="duration" attrs="{'invisible':[('is_half_day','=',False)]}" />
+                        <field name="is_half_day" />
+                      </group>
+                    </sheet>
+
+                  </form>
+                </field>
+
+              </page>
+            </notebook>
+          </sheet>
+
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="mental_health.doctor_unavailable_dates">
+      <field name="name">Unavailable Dates</field>
+      <field name="res_model">doctor.dates</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Unavailable Dates" id="mental_health.doctor_unavailable_menu"
+      parent="mental_health.doctor_menu"
+      action="mental_health.doctor_unavailable_dates"
+      sequence="4"
+    />
+
+    <!-- this below is for the working hours of the doctor  -->
+    <record model="ir.ui.view" id="doctor_working_hours_tree_view">
+      <field name="name">doctor.working.hours.tree.view</field>
+      <field name="model">doctor.working.hours</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id" />
+
+          <field name="slot_duration" widget="float_time" />
+          <field name="working_schedule_ids" widget="many2many_tags" />
+
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="doctor_working_hours_form_view">
+      <field name="name">doctor.working.hours.form.view</field>
+      <field name="model">doctor.working.hours</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="Doctor">
+
+              <field name="doctor_id" />
+              <field name="slot_duration" widget="float_time" />
+            </group>
+            <notebook>
+              <page string="Working Schedule">
+                <field name="working_schedule_ids">
+                  <tree editable="bottom">
+                    <field name="day_of_week" />
+                    <field name="start_time" widget="float_time" />
+                    <field name="end_time" widget="float_time" />
+                    <field name="slot_ids" widget="many2many_tags" />
+                  </tree>
+
+                </field>
+              </page>
+            </notebook>
+
+          </sheet>
+
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="doctor_working_hours_action">
+      <field name="name">Working Hours</field>
+      <field name="res_model">doctor.working.hours</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Working Hours" id="doctor_working_hours_menu"
+      parent="mental_health.doctor_menu"
+      action="doctor_working_hours_action"
+      sequence="7"
+    />
+
+    <!-- this below is for defining the slot -->
+    <!-- <record model="ir.ui.view" id="doctor_slot_tree_view">
+      <field name="name">doctor.slot.tree.view</field>
+      <field name="model">slot.define.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id" />
+          <field name="slot_duration" widget="float_time" />
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="doctor_slot_form_view">
+      <field name="name">doctor.slot.form.view</field>
+      <field name="model">slot.define.model</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="doctor_id" />
+              <field name="slot_duration" widget="float_time" />
+            </group>
+          </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="doctor_slot_assignment_action">
+      <field name="name">Doctor Slot</field>
+      <field name="res_model">slot.define.model</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Slot" id="doctor_slot_menu"
+      parent="mental_health.doctor_menu"
+      action="doctor_slot_assignment_action"
+      sequence="7"
+    /> -->
+    <!-- this below is for set holiday model -->
+    <record model="ir.ui.view" id="set_holiday_tree_view">
+      <field name="name">set.holiday.tree.view</field>
+      <field name="model">set.holiday.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="holiday_name" />
+          <field name="holiday_date" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="set_holiday_action">
+      <field name="name">Holiday</field>
+      <field name="res_model">set.holiday.model</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Holiday" id="set_holiday_menu"
+      parent="mental_health.configuration_menu"
+      action="set_holiday_action"
+      sequence="7"
+    />
+    <!-- this below is for view of res config setting -->
+    <record id="res_config_settings_mental_health_form_view" model="ir.ui.view">
+      <field name="name">res.config.settings.mental.health.form.view</field>
+      <field name="model">res.config.settings</field>
+      <field name="priority" eval="90" />
+      <field name="arch" type="xml">
+        <form>
+
+          <!-- Add your new field inside the existing div -->
+          <div class="row mt16 o_settings_container" id="end_contract_setting">
+            <div class="col-12 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane" />
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">Default Slot Duration</span>
+                <div class="text-muted content-group mt16">
+                  <div class="text-muted content-group mt16">
+                    <field name="default_slot_duration" class="text-center"
+                      style="width: 10%; min-width: 4rem;" />
+                    <span>hours</span>
+                  </div>
+                </div>
+                <!-- Add your new field here -->
+
+              </div>
+              <!-- <div class="o_setting_right_pane">
+                          <span class="o_form_label">Average Working Hours</span>
+                          <div class="text-muted content-group mt16">
+                              <div class="text-muted content-group mt16">
+                                  <field name="average_working_hours" class="text-center" style="width: 10%; min-width: 4rem;" />
+                                  <span>hours</span>
+                              </div>
+                          </div>
+                          
+                      </div>
+                      <div class="o_setting_right_pane">
+                          <span class="o_form_label">Default Calender Appointment Period</span>
+                          <div class="text-muted content-group mt16">
+                              <div class="text-muted content-group mt16">
+                                  <field name="default_appointment_calender_period" class="text-center" style="width: 10%; min-width:
+              4rem;" />
+                                  <span>days</span>
+                              </div>
+                          </div>
+                          
+                      </div> -->
+            </div>
+          </div>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="res_config_settings_action">
+      <field name="name">Master Setup</field>
+      <field name="res_model">res.config.settings</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="mental_health.res_config_settings_mental_health_form_view" />
+    </record>
+
+
+    <menuitem name="Settings" id="setting_menu"
+      parent="mental_health.configuration_menu"
+      action="res_config_settings_action"
+      sequence="7"
+    />
+
+    <!-- this below is for the doctor working hour slots
+     -->
+    <record model="ir.ui.view" id="doctor_working_hours_slot_tree_view">
+      <field name="name">doctor.working.hours.slot.tree.view</field>
+      <field name="model">doctor.working.hours.slot</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id" />
+          <field name="day_of_week" />
+          <field name="slot_start_time" />
+          <field name="slot_end_time" widget="float_time" />
+
+
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="doctor_working_hour_slot_action">
+      <field name="name">Master Setup</field>
+      <field name="res_model">doctor.working.hours.slot</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Doctor Working Slot" id="setting_menu"
+      parent="mental_health.configuration_menu"
+      action="doctor_working_hour_slot_action"
+      sequence="7"
+    />
+
+    <!-- this  below is for the appointment date status page which is appointment_schedule_model -->
+    <record model="ir.ui.view" id="appointment_schedule_model_tree_view">
+      <field name="name">appointment.schedule.model.tree.view</field>
+      <field name="model">appointment.schedule.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id" />
+          <field name="day" />
+          <field name="date" />
+          <field name="slot_start_time" widget="badge" />
+          <field name="slot_end_time" widget="badge" />
+          <field name="slot_status" decoration-danger="slot_status == ''"
+            decoration-success="slot_status == 'booked'" decoration-info="slot_status == 'draft'"
+            widget="badge" optional="show" />
+
+
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="appointment_schedule_model_action">
+      <field name="name">All Doctor Schedule Details</field>
+      <field name="res_model">appointment.schedule.model</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Appointment Schedule" id="setting_menu"
+      parent="mental_health.configuration_menu"
+      action="appointment_schedule_model_action"
+      sequence="7"
+    />
+  </data>
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <record id="generate_schedule_wizard_model" model="ir.ui.view">
+        <field name="name">generate.schedule.wizard.model</field>
+        <field name="model">generate.schedule.wizard.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                      
+<!--                        <field name="duration_count"/>-->
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" type="object" name="generate_schedule_wizard_method" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>   
+</odoo>

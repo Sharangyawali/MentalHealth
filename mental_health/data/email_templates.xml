@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+           <record id="appointment_successfully_booked_mail" model="mail.template">
+            <field name="name">Appointment Request Mail</field>
+            <field name="model_id" ref="mental_health.model_book_appointment"/>
+            <field name="subject">Appointment Request Submitted</field>
+            <field name="email_from">"{{ user.email }}"</field>
+            <field name="email_to">"{{}}"</field>
+            <field name="body_html" type="html">
+                <p>Hell</p>
+            </field>
+        </record>
+           <record id="appointment_request_for_doctor" model="mail.template">
+            <field name="name">Appointment Request Mail For Doctor</field>
+            <field name="model_id" ref="mental_health.model_book_appointment"/>
+            <field name="subject">Appointment Request Received</field>
+            <field name="email_from">"{{ user.email }}"</field>
+            <field name="email_to">"{{}}"</field>
+            <field name="body_html" type="html">
+                <p>Hell</p>
+            </field>
+        </record>
+
+          <record id="appointment_request_accepted_mail" model="mail.template">
+            <field name="name">Appointment Request Accepted Mail</field>
+            <field name="model_id" ref="mental_health.model_book_appointment"/>
+            <field name="subject">Appointment Request Accepted</field>
+            <field name="email_from">"{{ user.email }}"</field>
+            <field name="email_to">"{{}}"</field>
+            <field name="body_html" type="html">
+                <p>Hell</p>
+            </field>
+        </record>
+
+        <record id="appointment_request_rejected_mail" model="mail.template">
+            <field name="name">Appointment Request Rejected Mail</field>
+            <field name="model_id" ref="mental_health.model_book_appointment"/>
+            <field name="subject">Appointment Request Rejected</field>
+            <field name="email_from">"{{ user.email }}"</field>
+            <field name="email_to">"{{}}"</field>
+            <field name="body_html" type="html">
+                <p>Hell</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

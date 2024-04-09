@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--    Grant access for organization.account model for company group-->
+       <record id="group_company_group_organization_account" model="ir.model.access">
+        <field name="name">Company Group Access to Organization Account</field>
+        <field name="model_id" ref="mental_health.model_organization_account"/>
+        <field name="group_id" ref="mental_health.company_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!--    Grant access for res.users model for company group-->
+       <record id="group_company_group_res_users" model="ir.model.access">
+        <field name="name">Company Group Access to Res Users</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="group_id" ref="mental_health.company_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+        <!--    Grant access for res.company model for company group-->
+       <record id="group_company_group_res_company" model="ir.model.access">
+        <field name="name">Company Group Access to Res Company</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="group_id" ref="mental_health.company_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+<!--Grant access for book.appointment model for doctor group    -->
+       <record id="group_doctor_group_book_appointment" model="ir.model.access">
+        <field name="name">Doctor Group Access to Book Appointment</field>
+        <field name="model_id" ref="mental_health.model_book_appointment"/>
+        <field name="group_id" ref="mental_health.doctor_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!--Grant access for appointment.schedule.model for doctor group    -->
+       <record id="group_doctor_group_appointment_schedule_model" model="ir.model.access">
+        <field name="name">Doctor Group Access to Appointment Schedule Model</field>
+        <field name="model_id" ref="mental_health.model_appointment_schedule_model"/>
+        <field name="group_id" ref="mental_health.doctor_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+<!--    Patient.personal.info for doctor group-->
+           <record id="group_doctor_group_patient_personal_info_model" model="ir.model.access">
+        <field name="name">Doctor Group Access to Patient Personal Info</field>
+        <field name="model_id" ref="mental_health.model_patient_personal_info"/>
+        <field name="group_id" ref="mental_health.doctor_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!--    Doctor.list.model for portal group-->
+    <record id="group_portal_group_doctor_list_model" model="ir.model.access">
+        <field name="name">Portal Group Access to Doctor List Model</field>
+        <field name="model_id" ref="mental_health.model_doctor_list_model"/>
+        <field name="group_id" ref="base.group_portal"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+     <!--    ir.sequence for portal group-->
+    <record id="group_portal_group_ir_sequence_model" model="ir.model.access">
+        <field name="name">Portal Group Access to Ir Sequence</field>
+        <field name="model_id" ref="base.model_ir_sequence"/>
+        <field name="group_id" ref="base.group_portal"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+</odoo>
